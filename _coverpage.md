@@ -9,5 +9,5 @@
 - Serveless
 
 
-[GitHub](https://github.com/csymapp/Sheets2Resume)
+[GitHub](https://github.com/csymapp/vue-resume)
 [Getting Started](#sheets2resume)

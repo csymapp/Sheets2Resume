@@ -7,24 +7,32 @@ To get started, you will need to have
 - [a github account](quickstart?id=setting-up-a-github-account). *This is optional and its only for more technical users*
 
 If you already have a google account and would like to jump straight in, you can skip these steps and go to [Running the Code](running-the-code)
-### Setting up a google account
 
-You can either user a regular gmail(google) account, or you can set up a google account for your business (using a private email address such as privateemail@cseco.co.ke hosted either by google or elsewhere).
+## Setting up a google account
 
-#### Creating a new account on mail-in-a-box server
+Although this step is not about setting up gmail, if you already have a gmail account, you are good to go and you can safely skip this step.
 
-If you emails are hosted using a mail-in-a-box server, you can easily create a new email using the following command to make an API call:
+We will guide through the rest of the step through a way that you can use to skip google phone verification if all goes well.
+
+To set up a google acccount without being asked for a verification phone number (which will not be accepted after you open `too many` accounts with it), you need to first have a private email such as privateemail@cseco.co.ke. Setting up the mail server is beyond the scope of these instructions.
+
+### Creating a new account on mail-in-a-box server
+
+If your emails are hosted using a mail-in-a-box server, you can easily create a new email using the following command to make an API call:
 
 ```bash
 curl -s -X POST "https://{domain}/admin/mail/users/add" -d "email={email}" -d "password={password}" -u "{adminEmail}:{adminPassword}"
 ```
+This bash command can be run in [this noteboook](https://colab.research.google.com/github/adventHymnals/resources/blob/master/Bash_Tools.ipynb). Or you can create a new notebook to run it (this is the safer way), if you do not have access to a linux machine.
 
-You can either create an account either:
-- Directly
+Or you can the more easily use your admin interface to create the email.
+
+With your private email at hand, you can now create an google account either:
+- Directly (you will need a phone number for verification)
 - From an invite from google workspace
 
-##### Creating Directly
-Armed with your new email account, create a youtube account using that email address. For this go to youtube, or any other Google service and click either `sign in` or if you are already logged in to Google, click your profile picture, then `switch account`, then `add account`. You should end up on the following page.
+#### Creating Directly
+Armed with your new email account, create a youtube account using that email address. For this go to youtube, or any other Google service like google drive, etc, and click either `sign in` or if you are already logged in to Google, click your profile picture, then `switch account`, then `add account`. You should end up on the following page.
 
 ![New Account](_images/google/new_account.png 'New Account')
 
@@ -36,47 +44,55 @@ Click on `Create Account` and select `For work or my Business`
 Create the account using your private email account for your domain.
 
 
-##### Creating From Workspace Invite
-Alternatively, you can create the google account through an invite from a google workspace account. With this, you will skip the step of mobile phone verification. A free workspace account can be created [here](https://workspace.google.com/essentials/). However, if you create from a workspace invite, you will not have access to `google colab`, if using free(enterprise) workspace. So you will have to remove the email from the workspace. Note that a workspace can only have emails of a single domain. You may in some instances skip the phone verification part after the account is removed from the workspace. 
+#### Creating From Workspace Invite
+Alternatively, you can create the google account through an invite from a google workspace account. With this, you will skip the step of mobile phone verification. A free workspace account can be created [here](https://workspace.google.com/essentials/). However, if you create from a workspace invite, you will not have access to `google colab`, if using free(enterprise) workspace. So you will have to remove the email from the workspace after it has successfully been created and registered as a team member of the google workspace. Note that a workspace can only have emails of a single domain. You may in some instances skip the phone verification part after the account is removed from the workspace. 
 
 
-### Setting up a github account
+## Setting up a github account
+
+This step is optional and only required if you'd like to host you resume on a page like [this one](https://surgbc.github.io/vue-resume).
 
 This is pretty much straight forward. Go to [GitHub](https://github.com/) and create an account.
 
-#### Creating a Repo
-Once you have your github account and you are logged in, go on to create a repo.
+### Forking the Repo
+Once you have your github account and you are logged in, open [this page](https://github.com/csymapp/vue-resume/fork) to start forking vue-resume.
 
-Click the `+` sign at the top right of the page and select `New Repository`
+![Forking](_images/vue-resume-fork.PNG 'Fork')
 
-![New Account](_images/github/newRepo.png 'New Repo')
+Select the owner and click to uncheck the `Copy the Master Branch only` checkbox.
 
-Enter the repo name, eg, `website`. And leave the other things as they are, and submit the form. Note down the name you have given your repo.
+Once the forking process is complete, click on `Actions` menu at the top bar (third item from the left). On the actions page, select `I understand my workflows, go ahead and enable them` to enable the workflow.
 
-![New Account](_images/github/new_repo1.png 'New Repo')
+On the left, under `Actions` click on the workflow called `Deploy Nuxt Site to Pages`. Once the workflow has been shown on the page, click on `Run workflow` and `Run workflow` leaving the selected branch as `master`. You first resume site is now being built. You can check on the progress by clicking on the `Actions` menu again. This process will take longer than is desired (about 5 minutes). We are working to optimize the code to have it build faster.
 
-## Setting Everything Up
+![Workflow Section](_images/workflow_selection.PNG 'Selection')
 
-Open [this colab notebook](https://colab.research.google.com/github/adventHymnals/resources/blob/master/Sheets2Resume.ipynb) and sign in with your google account which you created in the previous steps.
+### Setting up Github Pages
+On the github page, click on `settings`. Then on the left side-menu click on `Pages`. Under source select `Deploy from Branch`, then under branch select `gh-pages` and `Save`
 
-![Run Colab](_images/colab/run_colab.png 'Run Colab')
+![Enable pages](_images/enable_pages.PNG 'Pages')
 
-Click the `play button` under `Website Tools` to run the notebook. Accept the requested permissions.
+Click on `Actions` again in the top menu and you should see an action called `pages build and deployment` running. Once it is done, click on it to open it, you should be able to see the url of your resume. It should be in the form `https://{your_github_username}.github.io/vue-resume`. This resume has been created using the data in resume-data.json. You can edit this file with your own data and the resume will be automatically updated. If you don't want to manually edit this file, you can proceed on to the next step.
 
-Then exand the notebook by clicking on the `Right Arrow` on the left of `Website Tools`
+![Resume Url](_images/resume_url.PNG 'Resume')
 
-![Expand Notebook](_images/colab/colab_expand.png 'Expand Notebook')
+## Generating an ssh key
+To generate an ssh key run following commands in your computer terminal. Or use [this colab notebook](https://colab.research.google.com/github/adventHymnals/resources/blob/master/Bash_Tools.ipynb). Check the section under `Generate SSH key`.
 
-Now follow execution by following the button below, it will move downwards once a singe cell is complete.
+1. 
+` ssh-keygen -t ed25519 -C "your_email@example.com"`
 
-![Follow Execution](_images/colab/follow_colab.png 'Follow Execution')
+(the type of key ed25519 is recommended by the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key).)
 
-When prompted for your email address, enter it and press enter:
+2. ssh-keygen will ask for a file path: *Enter file in which to save the key:* We suggest that you run this in colab so that you can leave it as `id_rsa`
 
-![ssh key email](_images/colab/colab_enter_email.png 'ssh key email')
+3. Enter a paraphrase
 
+4. Use the paraphrase as the password to compress id_rsa into ssh.zip. ssh.zip has inside it a directory called `ssh` which contains the keys.
 
-### Setting up ssh keys in GitHub
+5. Copy the contents of id_rsa.pub using `cat id_rsa.pub`
+
+## Setting up ssh keys in GitHub
 
 If you have reached this part, you are almost done. The next step step is to set up ssh keys in github. For this, follow these steps:
 
@@ -84,7 +100,7 @@ If you have reached this part, you are almost done. The next step step is to set
 
 ![ssh key set up](_images/github/your_repos.png 'ssh key set up')
 
-2. At the top, click on `repositories`. The open the repo you created in the previous steps.
+2. At the top, click on `repositories`. The open the repo you forked in the previous steps (vue-resume).
 
 ![ssh key set up](_images/github/select_repos.png 'ssh key set up')
 
@@ -100,136 +116,4 @@ If you have reached this part, you are almost done. The next step step is to set
 
 ![ssh key set up](_images/github/ssh_key_3.png 'ssh key set up')
 
-6. Now go to your google drive and find the folder (directory) called `publishing`. Inside it go to `Website-private` and open `id_rsa.pub.docx`. Copy the contents of the file, then go back to the github page of step 5 and paste inside `key` and submit the form.
-
-7. Go back to colab and press enter
-
-### Getting the Document Id (docId)
-
-The next step is to get a document Id for a google sheet that has been created. To get it, go to your google drive (using the same account you are using to run colab notebook). 
-
-Find the folder (directory) called `publishing`. 
-
-![Publishing Dir](_images/drive/drive_publishing.png 'Publishing Dir') 
-
-
-Inside it you wil see a folder called `Website`. Right click on it and select `share`.
-
-![Share Website Dir](_images/drive/share_website_dir.png 'Share Website Dir') 
-
-On the pop-up that comes up, under `General Access`, click on `Anyone with link`, then `Done`
-
-![Share Website Dir](_images/drive/anyone_with_link.png 'Share Website Dir') 
-
-Now open the `Website` directory, then `Website Data.xlsx`
-
-Now go to the address bar. You will find a url that is in the format: `https://docs.google.com/spreadsheets/d/1-JcnNlibAopymzBEVyUpaop-M56g9Dy1/edit#gid=1220970150`. Pick the value between `d/` and the next `/` which in this case is `1-JcnNlibAopymzBEVyUpaop-M56g9Dy1`
-
-Go back to colab and enter this value. You will have been prompted for it. Press enter to submit.
-
-### Getting the Sheet Id (sheetId)
-
-Go back to your google sheet and select the `SiteConfig` sheet. 
-
-Open your github repo (using steps provided above, starting by clicking on your profile picture at the top right). In your address bar you will find a url in the format: `https://github.com/gachieforerunner/website`. Copy the equivalent of `gachieforerunner/website`. Put this at the value of `Github` in the `SiteConfig` sheet
-
-Also edit `GitCommitUser` and `GitCommitEmail` with your name and email respectively.
-
-GO back to your google drive and open `Publishing/Website/_posts`. In your address bar, you will find a link in the format: `https://drive.google.com/drive/folders/11Mj8e7OelP7A4JYH32vXN1zKg_1SvUiz`. The folder id is the value after `folders/` which in this case is `11Mj8e7OelP7A4JYH32vXN1zKg_1SvUiz`. Copy it and set it as the value for `postsDirectoryId` in the `SiteConfig` sheet. Set also the values for the other ids for the corresponding folders.
-
-|Key|Value from|
-|---|----------|
-|postsDirectoryId|`Publishing/Website/_posts`|
-|authorDirectoryId|`Publishing/Website/_authors`|
-|pagesDirectoryId|`Publishing/Website/_pages`|
-|websiteDirId|`Publishing/Website`|
-|websitePrivateDirId|`Publishing/Website-private`|
-
-Once you are done with this part of the configuration, cehck the addess bar of your `SiteConfig` sheet. Find the section with `#gid=1537987707`. Copy the value after `#gid=` (the numeric value alone) and enter that into the prompt in colab.
-
-![Site Config](_images/drive/site_config_sheet.png 'Site Config') 
-
-```html
-<!-- index.html -->
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify@4/themes/vue.css"
-    />
-  </head>
-  <body>
-    <div id="app"></div>
-    <script>
-      window.$docsify = {
-        //...
-      };
-    </script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  </body>
-</html>
-```
-
-## Setting up ssh keys in GitHub
-
-?> Note that in both of the examples below, docsify URLs will need to be manually updated when a new major version of docsify is released (e.g. `v4.x.x` => `v5.x.x`). Check the docsify website periodically to see if a new major version has been released.
-
-Specifying a major version in the URL (`@4`) will allow your site will receive non-breaking enhancements (i.e. "minor" updates) and bug fixes (i.e. "patch" updates) automatically. This is the recommended way to load docsify resources.
-
-```html
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/themes/vue.css" />
-<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-```
-
-If you prefer to lock docsify to a specific version, specify the full version after the `@` symbol in the URL. This is the safest way to ensure your site will look and behave the same way regardless of any changes made to future versions of docsify.
-
-```html
-<link
-  rel="stylesheet"
-  href="//cdn.jsdelivr.net/npm/docsify@4.11.4/themes/vue.css"
-/>
-<script src="//cdn.jsdelivr.net/npm/docsify@4.11.4"></script>
-```
-
-## Getting the Site Up and Running
-
-If you have Python installed on your system, you can easily use it to run a static server to preview your site.
-
-```python2
-cd docs && python -m SimpleHTTPServer 3000
-```
-
-```python3
-cd docs && python -m http.server 3000
-```
-
-## Loading dialog
-
-If you want, you can show a loading dialog before docsify starts to render your documentation:
-
-```html
-<!-- index.html -->
-
-<div id="app">Please wait...</div>
-```
-
-You should set the `data-app` attribute if you changed `el`:
-
-```html
-<!-- index.html -->
-
-<div data-app id="main">Please wait...</div>
-
-<script>
-  window.$docsify = {
-    el: '#main',
-  };
-</script>
-```
-
-Compare [el configuration](configuration.md#el).
+6. Paste inside `key` and submit the form the key you copied from the colab script (the public key) in the previous step.

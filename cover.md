@@ -22,7 +22,7 @@ Set `coverpage` to **true**, and create a `_coverpage.md`:
 
 ![logo](_media/icon.svg)
 
-# docs2Resume <small>3.5</small>
+# sheets2Resume <small>3.5</small>
 
 > A magical documentation site generator.
 
